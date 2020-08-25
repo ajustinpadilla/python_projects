@@ -25,9 +25,41 @@ class vehicle:
 class boat(vehicle):
     dis_unit = "knots"
     speed_unit = "knots per hour"
+    engine_type = "sail"
+    anchored = True
+    def move(self):
+        if(self.anchored):
+            print("\nCannot move {} because it is anchored. Please unanchor {}".format(self.name, self.name))
+            self.moveAnchor()
+        else:
+            super().move()
+    def moveAnchor(self):
+        if(self.anchored):
+            anchor_position = input("\nWould you like to pull the anchor up?(yes/no)\n>>>").lower()
+            while(anchor_position != "yes" and anchor_position != "no"):
+                print("\nPlease answer with yes or no!")
+                anchor_position = (input("\nWould you like to pull the anchor up?(yes/no)\n>>>")).lower()
+            if(anchor_position == "yes"):
+                print("Your anchor has been pulled up. you may now sail {}.".format(self.name))
+                self.anchored = False
+                self.move()
+            elif(anchor_position == "no"):
+                print("\nYour {} will stay anchored. You cannot sail.".format(self.name))
+        else:
+            anchor_position = input("\nwould you like to anchor your {}.(yes/no)\n>>>".format(self.name)).lower()
+            while(anchor_position != "yes" and anchor_position != "no"):
+                print("\nPlease answer with yes or no!")
+                anchor_position = input("\nWould you like to pull the anchor up?(yes/no)\n>>>").lower()
+            if(anchor_position == "yes"):
+                print("Your anchor has been let down. You cannot sail {}.".format(self.name))
+                self.anchored = True
+            elif(anchor_position == "no"):
+                print("\nYour {}'s anchor will stay up.\n you may sail {}".format(self.name, self.name))
+                self.move()
 
 class plane(vehicle):
     air_speed = 550
+    engine_type = "General Electric GEnx"
 
     def __init__(self, name, load_cap = 307000, land_speed = 160):
         self.name = name
@@ -56,6 +88,6 @@ class plane(vehicle):
 
 
 
-boaty = plane("747")
+boaty = boat("boaty")
 
 boaty.move()
