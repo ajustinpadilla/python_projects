@@ -33,6 +33,16 @@ class boat(vehicle):
             self.moveAnchor()
         else:
             super().move()
+            nextOption = input("\nWould you like to anchor now or move more?(anchor/move/end)\n>>>").lower()
+            while(nextOption != "anchor" and nextOption != "move" and  nextOption != "end"):
+                print("\nPlease answer with anchor, move, or end!!")
+                nextOption = input("\nWould you like to anchor now or move more?(anchor/move/end)\n>>>").lower()
+            if(nextOption == "anchor"):
+                self.moveAnchor()
+            if(nextOption == "move"):
+                self.move()
+            else:
+                pass
     def moveAnchor(self):
         if(self.anchored):
             anchor_position = input("\nWould you like to pull the anchor up?(yes/no)\n>>>").lower()
